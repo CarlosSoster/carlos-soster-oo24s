@@ -101,52 +101,15 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     public void loadReserva(ActionEvent event)
             throws IOException {
-        setDataPane(openVBox(
-                "/fxml/FXMLReservaLista.fxml"
-        ));
         FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(
                     this.getClass()
                             .getResource("/fxml/FXMLReservaLista.fxml"));
         VBox root = (VBox) loader.load();
+        
         FXMLReservaListaController controller
             = loader.getController();
         controller.setUsuario(usuarioAutenticado);
-    }
-
-    @FXML
-    private void showReportProduto(ActionEvent event) {
-        GenerateReport generateReport = new GenerateReport();
-        InputStream file = this.getClass().getResourceAsStream("/report/rel-checkout.jasper");
-
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("TITULO", "Relatório de chek-out");
-        Image imagem = new ImageIcon(
-                this.getClass().getResource("/imagens/logoUTFPR.jpg")).getImage();
-        parameters.put("LOGO", imagem);
-
-        DatabaseConnection conn = DatabaseConnection.getInstance();
-        try {
-            JasperViewer viewer = generateReport.getReport(
-                    conn.getConnection(), parameters, file);
-            viewer.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText("Falha ao exibir relatório!");
-            alert.setContentText("Falha ao exibir relatório!");
-            alert.showAndWait();
-        }
-    }
-
-    @FXML
-    private void showPieChart(ActionEvent event) throws IOException {
-        setDataPane(openVBox("/fxml/FXMLPieChart.fxml"));
-    }
-
-    @FXML
-    private void showBarChart(ActionEvent event) throws IOException {
-        setDataPane(openVBox("/fxml/FXMLBarChart.fxml"));
+        boxPrincipal.getChildren().setAll(root);
     }
 }

@@ -33,8 +33,8 @@ public class Contato implements AbstractModel{
     private ETipoContato tipoContato;
     
     @ManyToOne()
-    @JoinColumn(name = "usuario_id", referencedColumnName="id")
-    private Usuario usuario;
+    @JoinColumn(name = "cliente_id", referencedColumnName="id")
+    private Cliente cliente;
 
     public Contato() {
     }
@@ -71,14 +71,13 @@ public class Contato implements AbstractModel{
         this.tipoContato = tipoContato;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
-
     @Override
     public int hashCode() {
         int hash = 7;

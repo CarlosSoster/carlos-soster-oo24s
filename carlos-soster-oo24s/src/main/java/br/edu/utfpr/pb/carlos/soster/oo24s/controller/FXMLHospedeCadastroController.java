@@ -5,7 +5,6 @@
  */
 package br.edu.utfpr.pb.carlos.soster.oo24s.controller;
 
-import br.edu.utfpr.pb.carlos.soster.oo24s.dao.CategoriaDao;
 import br.edu.utfpr.pb.carlos.soster.oo24s.dao.ClienteDao;
 import br.edu.utfpr.pb.carlos.soster.oo24s.dao.ReservaDao;
 import br.edu.utfpr.pb.carlos.soster.oo24s.model.Cliente;
@@ -14,18 +13,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -61,10 +52,11 @@ public class FXMLHospedeCadastroController implements Initializable {
         this.reservaDao = reservaDao;
     }
     
-        @FXML
+    @FXML
     private void cancel() {
         this.stage.close();
     }
+    
     @FXML
     private void save() {
         reserva.addHospede(

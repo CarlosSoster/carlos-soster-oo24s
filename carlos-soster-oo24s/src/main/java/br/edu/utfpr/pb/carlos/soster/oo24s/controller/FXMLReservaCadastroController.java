@@ -39,7 +39,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -175,8 +174,9 @@ public class FXMLReservaCadastroController implements Initializable {
         
     }
     
-    public void setReserva(Reserva reserva) {
+    public void setReserva(Reserva reserva, Usuario usuario) {
         this.reserva = reserva;
+        this.usuario = usuario;
         if (reserva.getId() != null) {
             textID.setText(reserva.getId().toString());
             comboQuarto.setValue(reserva.getQuarto());
@@ -184,11 +184,18 @@ public class FXMLReservaCadastroController implements Initializable {
             textMotivo.setText(reserva.getMotivo());
             textValorDiaria.setText(reserva.getValorDiaria().toString());
             dateReserva.setValue(reserva.getDataReserva());
-            dateEntrada.setValue(reserva.getDataEntrada());
-            dateSaida.setValue(reserva.getDataSaida());
+            labelUsuario.setText(reserva.getUsuario().getNome());
+            if (reserva.getDataEntrada() != null) {
+                dateEntrada.setValue(reserva.getDataEntrada());
+            }
+            if (reserva.getDataSaida() != null) {
+                dateSaida.setValue(reserva.getDataSaida());
+            }
             loadHospedes();
             loadServicos();
             loadProdutos();
+        }else{
+            labelUsuario.setText(this.usuario.getNome());
         }
     }
     @FXML
@@ -197,23 +204,38 @@ public class FXMLReservaCadastroController implements Initializable {
     }
     @FXML
     private void save() {
-        reserva.setCliente(
+        try {
+            reserva.setCliente(
                 comboCliente.getSelectionModel()
                         .getSelectedItem());
-        reserva.setQuarto(
-                comboQuarto.getSelectionModel()
-                        .getSelectedItem());
-        reserva.setMotivo(textMotivo.getText());
-        reserva.setValorDiaria(Double.parseDouble(textValorDiaria.getText()));
-        reserva.setDataReserva(dateReserva.getValue());
-        reserva.setDataEntrada(dateEntrada.getValue());
-        reserva.setDataSaida(dateSaida.getValue());
-        if (reserva.getId() == null){
-           //reserva.setUsuario(usuario);
+            reserva.setMotivo(textMotivo.getText());
+            reserva.setValorDiaria(Double.parseDouble(textValorDiaria.getText()));
+            reserva.setDataReserva(dateReserva.getValue());
+            reserva.setDataEntrada(dateEntrada.getValue());
+            reserva.setDataSaida(dateSaida.getValue());
+            if (reservaDao.validateQuarto(reserva.getDataReserva(), reserva.getDataSaida(),
+                    comboQuarto.getSelectionModel().getSelectedItem())) {
+                reserva.setQuarto(
+                    comboQuarto.getSelectionModel()
+                            .getSelectedItem());
+            } else{
+                throw new Exception("O quarto selecionado já pertence a outra reserva!");
+            }
+            if (reserva.getId() == null){
+               reserva.setUsuario(usuario);
+            }
+            this.reservaDao.save(reserva);
+            this.stage.close();
+                                       
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Ocorreu um erro "
+                    + " ao salvar o registro!");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
-        
-        this.reservaDao.save(reserva);
-        this.stage.close();
     }
     
     @FXML

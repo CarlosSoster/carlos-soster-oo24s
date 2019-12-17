@@ -58,9 +58,7 @@ public class MainSplash extends Application {
         final Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                updateMessage("Conectando ao banco de dados . . .");
                 UsuarioDao usuarioDao = new UsuarioDao();
-                updateMessage("Iniciando o sistema.");
                 return null;
             }
         };

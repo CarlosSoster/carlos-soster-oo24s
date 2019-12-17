@@ -56,7 +56,7 @@ public class FXMLLoginController implements Initializable {
                 scene.getStylesheets().add("/styles/style.css");
                 
                 Stage stage = new Stage();
-                stage.setTitle("Aula Java FX - 0024S");
+                stage.setTitle("Projeto Final - Carlos Soster");
                 stage.setScene(scene);
                 stage.setMaximized(true);
                 stage.setResizable(true);

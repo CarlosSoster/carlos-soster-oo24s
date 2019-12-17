@@ -62,22 +62,7 @@ public class Usuario implements AbstractModel, Serializable{
     @Lob
     @Column()
     private byte[] foto;
-    
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    private List<Contato> contatos;
-
-    public List<Contato> getContatos() {
-        return contatos;
-    }
-
-    public void setContatos(List<Contato> contatos) {
-        this.contatos = contatos;
-    }
-    
-    
-    
+  
     public byte[] getFoto() {
         return foto;
     }

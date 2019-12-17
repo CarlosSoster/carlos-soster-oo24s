@@ -112,7 +112,7 @@ public class FXMLReservaListaController implements Initializable {
             
             FXMLReservaCadastroController controller = 
                     loader.getController();
-            controller.setReserva(reserva);
+            controller.setReserva(reserva, usuario);
             controller.setDialogStage(dialogStage);
             dialogStage.showAndWait();
             

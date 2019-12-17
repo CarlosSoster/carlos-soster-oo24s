@@ -1,7 +1,7 @@
 package br.edu.utfpr.pb.carlos.soster.oo24s.model;
 
 public enum ETipoContato {
-    TELEFONE(1), CELULAR(2);
+    RESIDENCIAL(1), CELULAR(2);
     
     private final Integer id;
     
